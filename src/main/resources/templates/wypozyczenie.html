@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Wypozyczenie Ksiazki</title>
+</head>
+<body>
+<h1>Widok wypozyczenia ksiazki</h1>
+
+<form action="#" th:action="@{/dodajDoKoszyka}" th:method="get">
+    <select name="ksiazka">
+        <option value="0">Wybierz Ksiazke</option>
+        <option th:each="ksiazka : ${ksiazki}"
+                name="ksiazka"
+                th:value="${ksiazka.getId()}"
+                th:text="${ksiazka.htmlSelectDisplay()}"></option>
+    </select>
+    <input type="submit" value="DODAJ DO KOSZYKA">
+</form>
+
+<form action="#" th:action="@{/wypozyczKsiazki}" th:method="get">
+    <table>
+        <tbody>
+        <tr th:each="ksiazkaKoszyk : ${koszyk.ksiazkiDoWypozyczenia}">
+            <td th:text="${ksiazkaKoszyk.htmlSelectDisplay()}"></td>
+        </tr>
+        </tbody>
+    </table>
+
+    <label for="wypozyczajacy"> Dane Wypozyczajacego:</label>
+    <input th:unless="${koszyk.ksiazkiDoWypozyczenia.isEmpty()}" type="text" id="wypozyczajacy" name="wypozyczajacy">
+    <input th:unless="${koszyk.ksiazkiDoWypozyczenia.isEmpty()}" type="submit" value="WYPOZYCZ">
+</form>
+</body>
+</html>
